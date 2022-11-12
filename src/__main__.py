@@ -1,35 +1,23 @@
-from mintapi import Mint
-from pathlib import Path
-from configparser import ConfigParser
+from datetime import date, timedelta
+import plotly.express as px
+from life import Life
+from housing import housing
+from income import income
+from retirement import retirement
+from taxes import taxes
 
-config = ConfigParser()
-config.read(Path(__file__).parent / "config.ini")
+cashflows = housing + income + retirement + taxes
 
-mint: Mint = Mint(
-    email=config["MintCredentials"]["Email"],
-    password=config["MintCredentials"]["Password"],
-    # mfa_method="sms",
-    # mfa_input_callback=None,
-    # mfa_token=None,
-    intuit_account=None,
-    session_path=None,
-    imap_account=None,
-    imap_password=None,
-    imap_server=None,
-    imap_folder="INBOX",
-    wait_for_sync=True,
-    wait_for_sync_timeout=300,
-    use_chromedriver_on_path=False,
+today = date.today()
+life = Life(date(2022, 2, 12), cashflows=cashflows)
+forecast = life.generate_financial_forecast(
+    today, today + timedelta(days=365 * 20)
 )
 
-# Get basic account information
-print(mint.get_account_data())
-
-# Get bills
-print(mint.get_bills())
-
-# Close session and exit cleanly from selenium/chromedriver
-mint.close()
-
-# Initiate an account refresh
-mint.initiate_account_refresh()
+fig = px.line(
+    forecast,
+    x=forecast.index,
+    y="Cumulative Sum",
+    title="Financial Independence Forecast",
+)
+fig.show()

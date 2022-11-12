@@ -152,3 +152,7 @@ cython_debug/
 #.idea/
 
 *.ini
+data/*.csv
+data/*.json
+*.html
+src/.vscode/settings.json
