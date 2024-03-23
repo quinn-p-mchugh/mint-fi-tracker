@@ -1,6 +1,7 @@
+"""Module to interface with Mint via Mint API"""
+
 import json
 import pandas as pd
-import yagmail
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -187,10 +188,9 @@ send_mail(
     send_from=username,
     subject="test",
     text="text",
-    send_to=CONFIG["GMailCredentials"]["Email"]
+    send_to=CONFIG["GMailCredentials"]["Email"],
     files=[
-        "C:/Users/Quinn/Documents/Code Repositories/mint-fi-tracker/src/expense_categories_over_time.html",
-        "C:/Users/Quinn/Documents/Code Repositories/mint-fi-tracker/src/expense_categories_over_time.html",
+        "C:/Users/Quinn/Documents/Code Repositories/mint-fi-tracker/output/expense_categories_over_time.html",
+        "C:/Users/Quinn/Documents/Code Repositories/mint-fi-tracker/output/expense_categories_over_time.html",
     ],
 )
-
